@@ -2,7 +2,7 @@ function create() {
   // cria um
 }
 
-function show() {
+function show(id: string) {
   // mostra um específico
 }
 
