@@ -14,7 +14,6 @@ async function create(carData: CreateCar) {
         FROM cars
         WHERE cars.model = $1 AND cars.type = $3
       );
-    RETURNING $1;
   `, [model, price, type, image]);
 
   return result.rowCount;

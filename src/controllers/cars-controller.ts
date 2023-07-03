@@ -8,7 +8,7 @@ async function create(req: Request, res: Response) {
 
   await carsService.create({ model, price, type, image });
 
-  res.status(httpStatus.OK);
+  res.sendStatus(httpStatus.OK);
 }
 
 async function show(req: Request, res: Response) {

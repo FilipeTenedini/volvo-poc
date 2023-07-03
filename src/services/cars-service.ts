@@ -35,9 +35,9 @@ async function index() {
 }
 
 async function destroy(id: string) {
+  const item = await show(id);
   const deletedCount = await carsRepository.destroy(id);
   const minLimit = 1;
-  const item = await show(id);
 
   if (!item) {
     throw notFoundError();

@@ -7,7 +7,7 @@ import { createCar } from '@/schemas/createCar-schema';
 const carsRouter = Router();
 
 carsRouter
-  .post('/:id', bodyValidation(createCar), carsController.create)
+  .post('/', bodyValidation(createCar), carsController.create)
   .get('/:id', paramsValidation(idValidation), carsController.show)
   .get('/', carsController.index)
   .put('/:id', paramsValidation(idValidation), carsController.update)
