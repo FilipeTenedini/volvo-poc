@@ -1,5 +1,5 @@
-import { notFoundError } from "@/errors/notFoundError";
-import carsRepository from "@/repositories/cars-repository"
+import { notFoundError } from '@/errors/notFoundError';
+import carsRepository from '@/repositories/cars-repository'
 
 async function index() {
  const carsList = await carsRepository.index();
@@ -11,4 +11,16 @@ async function index() {
  return carsList;
 }
 
-export default { index }
+async function show(id: string) {
+  const car = await carsRepository.show(id);
+
+  if (!car) {
+   throw notFoundError();
+  }
+
+  return car;
+}
+
+export default {
+  index, show
+}

@@ -7,7 +7,11 @@ async function create(req: Request, res: Response) {
 }
 
 async function show(req: Request, res: Response) {
-  // mostra um específico
+  const { id } = req.params;
+
+  const car = await carsService.show(id);
+
+  res.status(httpStatus.OK).send(car);
 }
 
 async function index(req: Request, res: Response) {
