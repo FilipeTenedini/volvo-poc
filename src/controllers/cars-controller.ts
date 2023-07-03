@@ -26,7 +26,8 @@ async function index(req: Request, res: Response) {
 }
 
 async function update(req: Request, res: Response) {
-  // faz o update
+  // TODO => vou receber o objeto em req.body; e verificar os existentes, dessa forma passarei para o service e o service e repository;
+  // vou passar tanto as colunas como os valores porque vou saber quais colunnas são.
 }
 
 async function destroy(req: Request, res: Response) {
