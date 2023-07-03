@@ -6,10 +6,10 @@ import { idValidation } from '@/schemas/idValidation-schema';
 const carsRouter = Router();
 
 carsRouter
-  .post('/', carsController.create)
+  .post('/:id', carsController.create)
   .get('/:id', paramsValidation(idValidation), carsController.show)
   .get('/', carsController.index)
-  .put('/', carsController.update)
-  .delete('/', carsController.destroy);
+  .put('/:id', paramsValidation(idValidation), carsController.update)
+  .delete('/:id', paramsValidation(idValidation), carsController.destroy);
 
 export default carsRouter;

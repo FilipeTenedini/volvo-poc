@@ -25,7 +25,11 @@ async function update(req: Request, res: Response) {
 }
 
 async function destroy(req: Request, res: Response) {
-  // deleta especificico
+  const { id } = req.params;
+
+  const car = await carsService.destroy(id);
+
+  res.sendStatus(httpStatus.OK);
 }
 
 export default {
