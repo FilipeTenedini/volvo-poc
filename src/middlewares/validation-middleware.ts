@@ -2,7 +2,6 @@ import {
   Request, Response, NextFunction
 } from 'express';
 import { invalidDataError } from '@/errors/invalidDataError';
-import { AplicationError } from '@/protocols/Aplication';
 import { ObjectSchema } from 'joi';
 
 export function paramsValidation<T>(schema: ObjectSchema<T>) {

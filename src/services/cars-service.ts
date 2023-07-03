@@ -1,7 +1,7 @@
 import { badRequestError } from '@/errors/badRequestError';
 import { conflictError } from '@/errors/conflictError';
 import { notFoundError } from '@/errors/notFoundError';
-import { CreateCar } from '@/protocols/Car';
+import { Car, CreateCar } from '@/protocols/Car';
 import carsRepository from '@/repositories/cars-repository'
 
 async function create(carData: CreateCar) {
@@ -14,6 +14,7 @@ async function create(carData: CreateCar) {
 
   return insertedCarQt;
 }
+
 async function show(id: string) {
   const car = await carsRepository.show(id);
 
@@ -34,6 +35,20 @@ async function index() {
  return carsList;
 }
 
+async function update(carData: Car) {
+  await show(carData.id);
+  
+  const existentCar = await carsRepository.showByDetails(carData.model, carData.type);
+
+  if (existentCar) throw conflictError();
+
+  const updatedCarsId: string = await carsRepository.update(carData);
+
+  if (!updatedCarsId) throw badRequestError();
+
+  return updatedCarsId;
+}
+
 async function destroy(id: string) {
   const item = await show(id);
   const deletedCount = await carsRepository.destroy(id);
@@ -51,5 +66,5 @@ async function destroy(id: string) {
 }
 
 export default {
-  create, index, show, destroy
+  create, show, index, update, destroy
 }

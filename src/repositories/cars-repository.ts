@@ -29,6 +29,16 @@ async function show(id: string) {
   return result.rows[0];
 }
 
+async function showByDetails(model: string, type: string) {
+  const result = await db.query<Car>(`
+    SELECT *
+    FROM cars
+    WHERE model = $1 AND type = $2;
+  `, [model, type]);
+
+  return result.rows[0];
+}
+
 async function index() {
   const result = await db.query<Car>(`
     SELECT *
@@ -38,6 +48,22 @@ async function index() {
   return result.rows;
 }
 
+async function update(carData: Car) {
+  const values = Object.values(carData);
+
+  const result = await db.query<QueryResultRow>(`
+  UPDATE cars
+  SET
+    "model" = $2,
+    "price" = $3,
+    "type" = $4,
+    "image" = $5
+  WHERE id = $1
+  RETURNING id;
+  ;`, [...values]);
+
+  return result.rows[0].id;
+}
 
 async function destroy(id: string) {
   const result = await db.query<QueryResultRow>(`
@@ -50,5 +76,5 @@ async function destroy(id: string) {
 }
 
 export default {
-  create, show, index, destroy
+  create, show, showByDetails, index, update, destroy
 }

@@ -26,8 +26,13 @@ async function index(req: Request, res: Response) {
 }
 
 async function update(req: Request, res: Response) {
-  // TODO => vou receber o objeto em req.body; e verificar os existentes, dessa forma passarei para o service e o service e repository;
-  // vou passar tanto as colunas como os valores porque vou saber quais colunnas são.
+  const { id, model, price, type, image } = req.body as Car;
+
+  const updateCarValue: Car = { id, model, price, type, image };
+
+  const resultId = await carsService.update(updateCarValue);
+  
+  res.status(httpStatus.OK).send(`Item with id ${resultId} successfully changed`);
 }
 
 async function destroy(req: Request, res: Response) {
