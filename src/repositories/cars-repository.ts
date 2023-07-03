@@ -7,7 +7,13 @@ async function create(carData: CreateCar) {
 
   const result = await db.query<QueryResultRow>(`
     INSERT INTO cars(model, price, type, image)
-    VALUES ($1, $2, $3, $4)
+    SELECT $1, $2, $3, $4
+    WHERE
+      NOT EXISTS (
+        SELECT *
+        FROM cars
+        WHERE cars.model = $1 AND cars.type = $3
+      );
     RETURNING $1;
   `, [model, price, type, image]);
 
@@ -20,16 +26,6 @@ async function show(id: string) {
     FROM cars
     WHERE id = $1;
   `, [id]);
-
-  return result.rows[0];
-}
-
-async function showByDetails(model: string, type: string) {
-  const result = await db.query<Car>(`
-    SELECT *
-    FROM cars
-    WHERE model = $1 AND type = $2;
-  `, [model, type]);
 
   return result.rows[0];
 }
@@ -55,5 +51,5 @@ async function destroy(id: string) {
 }
 
 export default {
-  create, show, showByDetails, index, destroy
+  create, show, index, destroy
 }

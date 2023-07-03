@@ -5,15 +5,14 @@ import { CreateCar } from '@/protocols/Car';
 import carsRepository from '@/repositories/cars-repository'
 
 async function create(carData: CreateCar) {
-  const existentCar = await carsRepository.showByDetails(carData.model, carData.type);
-  const insertedCar = await carsRepository.create(carData);
+  const insertedCarQt = await carsRepository.create(carData);
   const minLimit = 1;
 
-  if (existentCar) throw conflictError();
+  if (insertedCarQt < minLimit) throw conflictError();
 
-  if (insertedCar < minLimit) throw badRequestError();
+  if (!insertedCarQt) throw badRequestError();
 
-  return insertedCar;
+  return insertedCarQt;
 }
 async function show(id: string) {
   const car = await carsRepository.show(id);
